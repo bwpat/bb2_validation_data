@@ -83,7 +83,7 @@ def importData():
             currentConn.execute(rds_config.sqls[i])
 
             results = currentConn.fetchall();
-            print(results)
+            # print(results)
             for row in results:
                 # print("key vals: " )
                 # print(dbCreds["abbv"])
@@ -96,7 +96,7 @@ def importData():
 
                 # dataToInsert[key].append(getVal(i, row))
                 pipe.set(key, json.dumps(getVal(i, row)))
-                print(r.get(key))
+                # print(r.get(key))
 
         pipe.execute()
         # print(dataToInsert)
