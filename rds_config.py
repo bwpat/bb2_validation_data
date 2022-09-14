@@ -10,7 +10,7 @@ bb2_dbname = "bigblue-2"
 #                 cursorclass=pymysql.cursors.DictCursor)
 
 sqls = {
-    "getDbCreds": """select cb.* from  accounts a join client_databases cb on cb.id=a.db_connection where cb.abbv <> '' limit 1; """,
+    "getDbCreds": """select cb.* from  accounts a join client_databases cb on cb.id=a.db_connection where cb.abbv <> ''; """,
     "dist": """select distinct
         map.distributor_seller_account as account_no,
         p.phone as phone,
