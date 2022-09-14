@@ -23,7 +23,7 @@ bb2_dbname = rds_config.bb2_dbname
 # mysql -hbb2-dev.cluster-chyay8gb54w8.us-west-1.rds.amazonaws.com -uadmin_bb2 -p3pX45n9MIGCm
 
 
-def lambda_handler(event, context):
+def importData(event, context):
     # TODO implement
 
     try:
@@ -130,3 +130,7 @@ def getVal(type, row):
 
     # if there is no match for type, return account_no
     return row[switcher.get(type, "account_no")]
+
+
+
+importData()
