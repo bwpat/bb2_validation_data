@@ -105,6 +105,7 @@ def importData():
                     # print(row)
                     key = i + ":<>:" + dbCreds["abbv"] + ":<>:" + (getKey(i, row))
 
+                    print(key)
                     if key not in dataToInsert:
                         # dataToInsert[key] = []
                         dataToInsert.append(tuple([key, getVal(i, row)]))
