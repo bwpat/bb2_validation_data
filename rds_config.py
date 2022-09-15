@@ -41,4 +41,6 @@ sqls = {
         join distributor_phones p on p.master_distributor_id=m.id;""",
         # where p.phone = %s """,
     # "custValidationSql2": """ and map.distributor_seller_account in (%s);"""
+    "replace": """replace INTO lambda_validation_data(row_key,row_data)
+        VALUES(%s, %s)"""
 }
