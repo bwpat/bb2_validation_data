@@ -96,7 +96,7 @@ def importData():
 
                 # dataToInsert[key].append(getVal(i, row))
                 pipe.set(key, json.dumps(getVal(i, row)))
-                # print(r.get(key))
+                print(r.get(key))
 
             print(dbCreds["abbv"] + " " + i + " done")
             pipe.execute()
