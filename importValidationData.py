@@ -74,55 +74,41 @@ def importData():
         currentConn = dbConn.cursor()
 
         for i in rds_config.sqls:
-            try:
-                dbConn = pymysql.connect(host=dbCreds["host"], user=dbCreds["db_user"], passwd=dbCreds["db_pass"],
-                                         db=dbCreds["db_name"], connect_timeout=5,
-                                         cursorclass=pymysql.cursors.DictCursor)
-                # print(dbConn)
-            except pymysql.MySQLError as e:
-                # logger.error("ERROR: Unexpected error: Could not connect to MySQL instance.")
-                # logger.error(e)
-                print(e)
-                print(dbCreds)
+            dataToInsert = []
+            print(i)
+            if i == 'getDbCreds':
+                print("skipping " + i)
+                continue
 
-            currentConn = dbConn.cursor()
+            currentConn.execute(rds_config.sqls[i])
 
-            for i in rds_config.sqls:
-                dataToInsert = []
-                print(i)
-                if i == 'getDbCreds':
-                    print("skipping " + i)
-                    continue
+            results = currentConn.fetchall();
+            # print(results)
+            for row in results:
+                # print("key vals: " )
+                # print(dbCreds["abbv"])
+                # print(i)
+                # print(row)
+                key = i + ":<>:" + dbCreds["abbv"] + ":<>:" + (getKey(i, row))
 
-                currentConn.execute(rds_config.sqls[i])
+                # print(key)
+                if key not in dataToInsert:
+                    # dataToInsert[key] = []
+                    dataToInsert.append(tuple([key, getVal(i, row)]))
 
-                results = currentConn.fetchall();
-                # print(results)
-                for row in results:
-                    # print("key vals: " )
-                    # print(dbCreds["abbv"])
-                    # print(i)
-                    # print(row)
-                    key = i + ":<>:" + dbCreds["abbv"] + ":<>:" + (getKey(i, row))
+                # r.set(key, json.dumps(getVal(i, row)))
+                print(r.get(key), getVal(i, row))
 
-                    # print(key)
-                    if key not in dataToInsert:
-                        # dataToInsert[key] = []
-                        dataToInsert.append(tuple([key, getVal(i, row)]))
+            # cur.executemany(rds_config.sqls['replace'], dataToInsert)
+            print(dbCreds["abbv"] + " " + i + " done")
+            # pipe.execute()
 
-                    # r.set(key, json.dumps(getVal(i, row)))
-                    print(r.get(key), getVal(i, row))
+        # print(dataToInsert)
 
-                # cur.executemany(rds_config.sqls['replace'], dataToInsert)
-                print(dbCreds["abbv"] + " " + i + " done")
-                # pipe.execute()
-
-            # print(dataToInsert)
-
-        return {
-            'statusCode': 200,
-            'body': json.dumps('validation tables done')
-        }
+    return {
+        'statusCode': 200,
+        'body': json.dumps('validation tables done')
+    }
 
 
 def getKey(type, row):
