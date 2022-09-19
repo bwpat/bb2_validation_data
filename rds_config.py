@@ -13,7 +13,7 @@ sqls = {
     "getDbCreds": """select cb.* from  accounts a join client_databases cb on cb.id=a.db_connection where cb.abbv <> ''; """,
     "dist": """select
             distinct
-            phone
+            phone as account_no
             from
             distributor_phones
             where
