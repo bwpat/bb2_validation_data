@@ -105,15 +105,15 @@ def importData():
                     # print(row)
                     key = i + ":<>:" + dbCreds["abbv"] + ":<>:" + (getKey(i, row))
 
-                    print(key)
+                    # print(key)
                     if key not in dataToInsert:
                         # dataToInsert[key] = []
                         dataToInsert.append(tuple([key, getVal(i, row)]))
 
                     # r.set(key, json.dumps(getVal(i, row)))
-                    # print(r.get(key))
+                    print(r.get(key), getVal(i, row))
 
-                cur.executemany(rds_config.sqls['replace'], dataToInsert)
+                # cur.executemany(rds_config.sqls['replace'], dataToInsert)
                 print(dbCreds["abbv"] + " " + i + " done")
                 # pipe.execute()
 
