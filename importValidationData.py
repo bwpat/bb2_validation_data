@@ -89,7 +89,7 @@ def importData():
                 # print(dbCreds["abbv"])
                 # print(i)
                 # print(row)
-                key = i + ":<>:" + dbCreds["abbv"] + ":<>:" + (getKey(i, row))
+                key = i + ":<>:" + dbCreds["abbv"] + (getKey(i, row))
 
                 # print(key)
                 if key not in dataToInsert:
@@ -114,10 +114,10 @@ def importData():
 def getKey(type, row):
     # print("key type: " + type)
 
-    key = row["phone"]
+    key = ''
 
-    if type == "dist":
-        key = row["account_no"] + ":<>:" + row["phone"]
+    if type != "dist":
+        key = ":<>:" + row["account_no"] + ":<>:" + row["phone"]
 
     # if there is no match for type, return phone
     return key
